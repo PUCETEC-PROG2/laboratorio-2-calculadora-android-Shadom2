@@ -5,8 +5,8 @@
 
 **Completa la siguiente información antes de comenzar:**
 
-- **Nombre completo**: [Nombre del estudiante]
-- **Carrera**: [Carrera del estudianete]
+- **Nombre completo**: Pablo Andrés Brito Ch
+- **Carrera**: Tecnología en Desarrollo de Software
 
 ---
 
