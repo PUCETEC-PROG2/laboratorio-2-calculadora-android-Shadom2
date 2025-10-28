@@ -69,11 +69,52 @@ class CalculatorViewModel : ViewModel () {
     }
 
     private fun clearLast() {
+        if (operator == null) {
+            if (number1.isNotBlank()) {
+                number1 = number1.dropLast(1)
+                state = state.copy(
+                    if (number1.isBlank())
+                        "0"
+                    else number1
+                )
+            }
+        } else {
+            if (number2.isNotBlank()) {
+                number2 = number2.dropLast(1)
+                state = state.copy(
+                    if (number2.isBlank())
+                        "0"
+                    else number2
+                )
+            } else {
+                operator = null
+                state = state.copy(number1)
+            }
+        }
     }
 
     private fun clearAll() {
+        number1 = ""
+        number2 = ""
+        operator = null
+        state = state.copy("0")
     }
 
     private fun performCalculation() {
+        val num1 = number1.toDoubleOrNull()
+        val num2 = number2.toDoubleOrNull()
+        if (num1 != null && num2 != null && operator != null) {
+            val result = when (operator) {
+                "+" -> num1 + num2
+                "−" -> num1 - num2
+                "×" -> num1 * num2
+                "÷" -> if(num2 != 0.0) num1 / num2 else Double.NaN
+                else -> 0.0
+            }
+            clearAll()
+            val resultsString = if (result.isNaN()) "Error" else result.toString().removeSuffix(suffix = ".0")
+            number1 = if (result.isNaN()) "" else resultsString
+            state = state.copy(display = resultsString)
+        }
     }
 }
